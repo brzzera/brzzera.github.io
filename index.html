@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web do Br</title>
+    <!-- Removido o EmailJS CDN -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url("https://cdn.discordapp.com/attachments/1355588564917686283/1355729329337798806/wallpaperflare.com_wallpaper1.jpg?ex=67e9fcd4&is=67e8ab54&hm=9e52d45bcde0da02816cfeea9b178ffe42132318398f71b42df923795802d012&");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: white;
+            min-height: 100vh;
+            cursor: none; /* Esconde o cursor padrão */
+        }
+        /* Resto do CSS permanece igual */
+        #view-counter {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.274);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .discord-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 0;
+        }
+        img {
+            width: 100px;
+            border-radius: 50%;
+        }
+        .profile-img {
+            border: 3px solid rgb(255, 255, 255);
+        }
+        .discord-status {
+            width: 100%;
+            border-radius: 10px;
+            max-width: 350px;
+            border: none;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 18px; /* Reduced from default size */
+        }
+        .discord-title {
+            font-size: 16px; /* Even smaller size for Discord Status */
+            margin-bottom: 10px;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links button {
+            display: block;
+            width: 100%;
+            background: rgb(255, 255, 255);
+            color: black;
+            text-decoration: none;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .links button:hover {
+            background: #ffffff;
+        }
+        /* New styles for the video container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            border: none;
+        }
+        /* Footer style */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            font-style: italic;
+        }
+        /* Contact form styles */
+        .contact-form {
+            text-align: left;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+        .contact-form textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .contact-form button {
+            background: rgb(255, 255, 255);
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .contact-form button:hover {
+            background: #e0e0e0;
+        }
+        /* Status message styles */
+        #status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: rgba(76, 175, 80, 0.7);
+            color: white;
+        }
+        .error {
+            background-color: rgba(244, 67, 54, 0.7);
+            color: white;
+        }
+        .loading {
+            background-color: rgba(33, 150, 243, 0.7);
+            color: white;
+        }
+        
+        /* Estilos para o efeito do cursor */
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8); /* Branco fixo */
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Branco fixo */
+}
+
+.cursor-trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5); /* Branco fixo */
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease;
+}
+    </style>
+    <script>
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</head>
+<body>
+    <!-- O resto do HTML permanece igual -->
+    <!-- Cursor personalizado -->
+    <div class="cursor"></div>
+    
+    <div class="container">
+        <img class="profile-img" src="https://cdn.discordapp.com/attachments/963872231333695568/1355614981445652480/510beebb59e33a485be7ada76870fae6.png?ex=67e99255&is=67e840d5&hm=9fdeeaf2ee8616db4d6413f6f774cad3bd0c3a1a9f2f9326c9259cb71f6d1a26&" alt="Minha Foto">
+        <h1>Br</h1>
+        <p>Gosto de café e pão de queijo👍👌</p>
+
+<!-- Contador de visualizações -->
+<div id="view-counter" style="margin-top: 10px; font-size: 16px; font-weight: bold;">
+    Carregando visualizações...
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+<script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCd1lwearx5d6JG96QuIJH3kG7EuOKDv_0",
+        authDomain: "slaa-fa528.firebaseapp.com",
+        databaseURL: "https://slaa-fa528-default-rtdb.firebaseio.com",
+        projectId: "slaa-fa528",
+        storageBucket: "slaa-fa528.firebasestorage.app",
+        messagingSenderId: "621874034053",
+        appId: "1:621874034053:web:b6ec6098025222b90840ec"
+    };
+
+    // Inicializa o Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const viewCounterElement = document.getElementById('view-counter');
+
+        // Referência ao contador no banco de dados
+        const counterRef = firebase.database().ref('viewCounter');
+
+        // Incrementa o contador
+        counterRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+        });
+
+        // Atualiza o contador no site
+        counterRef.on('value', (snapshot) => {
+            const count = snapshot.val();
+            viewCounterElement.textContent = `Visualizações: ${count}`;
+        });
+    });
+</script>
+        <div class="links">
+            <button onclick="openLink('https://discordapp.com/users/867056899148480593')">Discord</button>
+            <button onclick="openLink('https://twitch.tv/obrzera')">Twitch</button>
+            <button onclick="openLink('https://open.spotify.com/user/31whkw75jjs7l5pdx5gx4vqchm6i?si=af4fc1afe49547df')">Spotify</button>
+            <button onclick="openLink('https://www.instagram.com/brv.moreira?igsh=MWRzdHQ4a2xqcHd1OQ==')">Instagram</button>
+        </div>
+
+        <h2 class="discord-title">Discord Status</h2>
+        <div class="discord-container">
+            <img class="discord-status" src="https://discord.c99.nl/widget/theme-2/867056899148480593.png" alt="Discord Profile">
+        </div>
+    </div>
+    
+    <!-- New Video Container -->
+    <div class="container">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/LURd2QCv3ZA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Contact Form Container - Modificado para usar FormSubmit -->
+    <div class="container">
+        <h2>Contate-me</h2>
+        <form id="contact-form" class="contact-form" action="https://formsubmit.co/brsvmoreira@gmail.com" method="POST">
+            <!-- Campos ocultos para configuração do FormSubmit -->
+            <input type="hidden" name="_subject" value="Nova mensagem do site">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://brzera.netlify.app/success.html">
+            
+            <input type="text" id="name" name="name" placeholder="Seu nome" required>
+            <input type="email" id="email" name="email" placeholder="Seu email" required>
+            <textarea id="message" name="message" placeholder="Sua mensagem" required></textarea>
+            <button type="submit" id="submit-btn">Enviar Mensagem</button>
+        </form>
+        <div id="status-message"></div>
+    </div>
+
+    <!-- Footer with developer credit -->
+    <div class="footer">
+        Desenvolvido por Brzera
+    </div>
+
+    <!-- Copyright Footer -->
+    <div class="copyright-footer">
+        <div class="copyright-text">
+            <i class="fa-regular fa-copyright copyright-icon"></i> 2025 Todos os direitos reservados - Br
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const cursor = document.querySelector('.cursor');
+        const trailElements = [];
+        const maxTrail = 20; // Número máximo de elementos no rastro
+
+        // Cria os elementos do rastro
+        for (let i = 0; i < maxTrail; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('cursor-trail');
+            document.body.appendChild(trail);
+            trailElements.push({
+                element: trail,
+                x: 0,
+                y: 0,
+                opacity: 0
+            });
+        }
+
+        // Substitua o evento 'mousemove' existente por este:
+        document.addEventListener('mousemove', function(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Atualiza o cursor principal
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+
+            // Atualiza as posições do rastro
+            for (let i = trailElements.length - 1; i > 0; i--) {
+                trailElements[i].x = trailElements[i - 1].x;
+                trailElements[i].y = trailElements[i - 1].y;
+                trailElements[i].opacity = 1 - (i / maxTrail);
+
+                trailElements[i].element.style.left = trailElements[i].x + 'px';
+                trailElements[i].element.style.top = trailElements[i].y + 'px';
+                trailElements[i].element.style.opacity = trailElements[i].opacity;
+            }
+
+            // Atualiza o primeiro elemento do rastro para a posição atual do mouse
+            trailElements[0].x = x;
+            trailElements[0].y = y;
+            trailElements[0].opacity = 0.8;
+            trailElements[0].element.style.left = trailElements[0].x + 'px';
+            trailElements[0].element.style.top = trailElements[0].y + 'px';
+            trailElements[0].element.style.opacity = trailElements[0].opacity;
+        });
+
+        // Outros eventos e lógica permanecem iguais...
+    });
+</script>
+</body>
+</html>

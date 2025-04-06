@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagem Enviada - Web do Br</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url("https://cdn.discordapp.com/attachments/1355588564917686283/1355729329337798806/wallpaperflare.com_wallpaper1.jpg?ex=67e9fcd4&is=67e8ab54&hm=9e52d45bcde0da02816cfeea9b178ffe42132318398f71b42df923795802d012&");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: white;
+            min-height: 100vh;
+            cursor: none; /* Esconde o cursor padrão */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.274);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .thank-you-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .home-button {
+            display: inline-block;
+            background: rgb(255, 255, 255);
+            color: black;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        
+        .home-button:hover {
+            background: #e0e0e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Footer style */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            font-style: italic;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+        
+        /* Estilos para o efeito do cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        .cursor-trail {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Animação de entrada */
+        .container {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor personalizado -->
+    <div class="cursor"></div>
+    
+    <div class="container">
+        <!-- Ícone de verificação/sucesso -->
+        <div class="thank-you-icon">✓</div>
+        
+        <h1>Mensagem Enviada com Sucesso!</h1>
+        
+        <p>Obrigado por entrar em contato! Sua mensagem foi recebida e responderei o mais breve possível.</p>
+        
+        <a href="/index.html" class="home-button">Voltar para a Página Inicial</a>
+
+    </div>
+
+    <!-- Footer with developer credit -->
+    <div class="footer">
+        Desenvolvido por Brzera
+    </div>
+
+    <script type="text/javascript">
+        // Script para o efeito do cursor
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursor = document.querySelector('.cursor');
+            const trailElements = [];
+            const maxTrail = 20; // Número máximo de elementos no rastro
+            
+            // Cria os elementos do rastro
+            for (let i = 0; i < maxTrail; i++) {
+                const trail = document.createElement('div');
+                trail.classList.add('cursor-trail');
+                document.body.appendChild(trail);
+                trailElements.push({
+                    element: trail,
+                    x: 0,
+                    y: 0,
+                    opacity: 0
+                });
+            }
+            
+            // Atualiza a posição do cursor principal
+            document.addEventListener('mousemove', function(e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                // Atualiza as posições do rastro
+                for (let i = trailElements.length - 1; i > 0; i--) {
+                    trailElements[i].x = trailElements[i-1].x;
+                    trailElements[i].y = trailElements[i-1].y;
+                    trailElements[i].opacity = 1 - (i / maxTrail);
+                    
+                    trailElements[i].element.style.left = trailElements[i].x + 'px';
+                    trailElements[i].element.style.top = trailElements[i].y + 'px';
+                    trailElements[i].element.style.opacity = trailElements[i].opacity;
+                }
+                
+                // Atualiza o primeiro elemento do rastro para a posição atual do mouse
+                trailElements[0].x = e.clientX;
+                trailElements[0].y = e.clientY;
+                trailElements[0].opacity = 0.8;
+                trailElements[0].element.style.left = trailElements[0].x + 'px';
+                trailElements[0].element.style.top = trailElements[0].y + 'px';
+                trailElements[0].element.style.opacity = trailElements[0].opacity;
+            });
+            
+            // Adiciona efeito de hover nos botões
+            const buttons = document.querySelectorAll('button, .home-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                    cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                    cursor.style.mixBlendMode = 'difference';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                    cursor.style.mixBlendMode = 'normal';
+                });
+            });
+            
+            // Esconde o cursor quando o mouse sai da janela
+            document.addEventListener('mouseout', function(e) {
+                if (e.relatedTarget === null) {
+                    cursor.style.opacity = '0';
+                    trailElements.forEach(trail => {
+                        trail.element.style.opacity = '0';
+                    });
+                }
+            });
+            
+            // Mostra o cursor quando o mouse entra na janela
+            document.addEventListener('mouseover', function() {
+                cursor.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html>
